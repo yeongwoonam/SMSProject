@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <Resource
+            name="jdbc/smsDatasource"
+            type="javax.sql.DataSource"
+            auth="Container"
+            maxActive="30"
+            maxIdle="4"
+            maxWait="10000"
+            username="SMS_SENDER"
+            password="bocare_sms_sender"
+            driverClassName="org.mariadb.jdbc.Driver"
+            url="jdbc:mariadb://localhost:3306/SMS_Service?useUnicode=true&amp;characterEncoding=utf8&amp;passwordCharacterEncoding=utf8">
+    </Resource>
+</Context>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function smsByteChk(content) {
+            var temp_str = content.value;
+            var remain = document.getElementById("sms_remain");
+            remain.value = 80 - getByte(temp_str);
+            //남은 바이트수를 표시 하기
+            if (remain.value < 0) {
+                alert(80 + "Bytes를 초과할 수 없습니다.");
+                while (remain.value < 0) {
+                    temp_str = temp_str.substring(0, temp_str.length - 1);
+                    content.value = temp_str;
+                    remain.value = 80 - getByte(temp_str);
+                }
+                content.focus();
+            }
+        }
+
+        function getByte(str) {
+            var resultSize = 0;
+            if (str == null) {
+                return 0;
+            }
+            for (var i = 0; i < str.length; i++) {
+                var c = escape(str.charAt(i));
+                if (c.length == 1)//기본 아스키코드
+                {
+                    resultSize++;
+                } else if (c.indexOf("%u") != -1)//한글 혹은 기타
+                {
+                    resultSize += 2;
+                } else {
+                    resultSize++;
+                }
+            }
+            return resultSize;
+        }
+    </script>
+</head>
+<body>
+
+
+<form name="frm">
+    <table>
+        <tr>
+            <td>
+                <input type="text" name="sms_remain" style="width:15px; border:2px dotted #00f"
+                       maxLength="2" value="80" readonly>Bytes 남음
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <textarea name="smscontent" rows="8" cols="16"
+                      onkeyup="smsByteChk(this);" onkeydown="smsByteChk(this);"></textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+</body>
+</html>

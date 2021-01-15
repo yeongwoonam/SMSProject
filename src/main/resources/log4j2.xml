@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="layoutPattern">%style{%d{yyyy/MM/dd HH:mm:ss,SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red, ERROR=red,
+            INFO=green, DEBUG=blue}  [%C] %style{[%t]}{yellow}- %m%n -
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layoutPattern}" />
+        </Console>
+        <RollingRandomAccessFile name="LogApp" fileName="log/app.log" filePattern="log/app/app-%d{yyyy-MM-dd_HH}_%i.log" immediateFlush="true" append="true" ignoreExceptions="false">
+            <PatternLayout pattern="${layoutPattern}"/>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="4 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="500"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="LogApp"/>
+        </Root>
+    </Loggers>
+</Configuration>
